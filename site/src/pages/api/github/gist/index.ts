@@ -24,7 +24,7 @@ const api = async (req: NextApiRequest, res: NextApiResponse) => {
         });
     } else {
       res.status(403).json({
-        message: 'You must be sign in to use this API',
+        message: 'You must be signed in to use this API',
       });
     }
   } else {
