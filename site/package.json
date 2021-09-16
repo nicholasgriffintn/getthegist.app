@@ -1,6 +1,6 @@
 {
-  "name": "nextjs-site-starter",
-  "version": "1.0.0",
+  "name": "get-the-gist",
+  "version": "0.0.1",
   "author": "Nicholas Griffin <inbox@nicholasgriffin.dev>",
   "private": true,
   "scripts": {
