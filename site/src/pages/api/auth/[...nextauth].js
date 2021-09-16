@@ -9,11 +9,10 @@ export default NextAuth({
       scope: 'read:user',
     }),
   ],
+
   secret: process.env.NEXT_AUTH_SECRET,
 
-  session: {
-    jwt: true,
-  },
+  session: { jwt: true, maxAge: 30 * 24 * 60 * 60 },
 
   jwt: {
     secret: process.env.NEXT_JWT_AUTH_SECRET,
