@@ -1,14 +1,18 @@
-import { getSession } from 'next-auth/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
+
+import { getSession } from 'next-auth/client';
+import { getToken } from 'next-auth/jwt';
 const { Octokit } = require('@octokit/rest');
 
 const api = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
+    const secret = process.env.NEXT_JWT_AUTH_SECRET;
+    const token = await getToken({ req, secret });
     const session = await getSession({ req });
 
-    if (session && session.token) {
+    if (session && token && (token.accessToken || session.accessToken)) {
       const octokit = new Octokit({
-        auth: `token ${session.token}`,
+        auth: `token ${token}`,
       });
 
       octokit.gists
@@ -19,6 +23,12 @@ const api = async (req: NextApiRequest, res: NextApiResponse) => {
           res.status(200).json({
             message: 'Success',
             data,
+          });
+        })
+        .catch(err => {
+          console.error(err);
+          res.status(500).json({
+            message: 'Something went wrong!',
           });
         });
     } else {

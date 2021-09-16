@@ -16,40 +16,24 @@ export default NextAuth({
 
   jwt: {
     secret: process.env.NEXT_JWT_AUTH_SECRET,
-    encryption: true,
   },
 
   theme: 'auto',
 
   debug: false,
 
-  /* callbacks: {
-    async jwt({ token, user, account, profile, isNewUser }) {
-      console.log(token);
-      console.log(user);
-      console.log(account);
-      console.log(profile);
-      console.log(isNewUser);
-
-      const newToken = token;
-
-      if (account && account.access_token) {
-        newToken.accessToken = account.access_token;
+  callbacks: {
+    async jwt(token, _, account) {
+      if (account) {
+        token.id = account.id;
+        token.accessToken = account.accessToken;
       }
-      return newToken;
-    },
-    async session({ session, token, user }) {
-      console.log(session);
       console.log(token);
-      console.log(user);
-
-      const newSession = session;
-
-      if (token && token.accessToken) {
-        newSession.accessToken = token.accessToken;
-      }
-
-      return newSession;
+      return token;
     },
-  }, */
+    async session(session, user) {
+      session.user = user;
+      return session;
+    },
+  },
 });
