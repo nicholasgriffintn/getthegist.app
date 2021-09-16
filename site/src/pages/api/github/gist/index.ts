@@ -15,7 +15,7 @@ const api = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (session && token && (token.accessToken || session.accessToken)) {
       const octokit = new Octokit({
-        auth: `token ${session.token}`,
+        auth: `token ${token.accessToken || session.accessToken}`,
       });
 
       octokit.gists

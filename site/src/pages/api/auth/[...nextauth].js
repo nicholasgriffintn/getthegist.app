@@ -25,10 +25,18 @@ export default NextAuth({
   callbacks: {
     async jwt(token, _, account) {
       if (account) {
+        token.provider = account.provider;
+        token.type = account.type;
         token.id = account.id;
         token.accessToken = account.accessToken;
+        token.access_token = account.access_token;
+        token.refreshToken = account.refreshToken;
+        token.refresh_token = account.refresh_token;
+        token.refresh_token_expires_in = account.refresh_token_expires_in;
+        token.scope = account.scope;
+        token.token_type = account.token_type;
+        token.expires_in = account.expires_in;
       }
-      console.log(token);
       return token;
     },
     async session(session, user) {
