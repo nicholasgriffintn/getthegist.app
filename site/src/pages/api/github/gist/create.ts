@@ -6,7 +6,7 @@ const api = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'GET') {
     const session = await getSession({ req });
 
-    if (session) {
+    if (session && session.token) {
       const octokit = new Octokit({
         auth: `token ${session.token}`,
       });
