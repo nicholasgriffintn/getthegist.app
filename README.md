@@ -45,3 +45,21 @@ Returns the CSRF token.
 `GET`: https://getthegist.app/api/auth/providers
 
 Returns the list of available providers.
+
+### GitHub Gists
+
+`GET` https://getthegist.app/api/github/gist
+
+Get all of the user's gists, must be signed in
+
+`GET` https://getthegist.app/api/github/gist/[id]
+
+Get a gist
+
+`POST` https://getthegist.app/api/github/gist/create
+
+Create a gist
+
+`PUT` https://getthegist.app/api/github/gist/update
+
+Update a gist
