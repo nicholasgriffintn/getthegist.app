@@ -21,8 +21,9 @@ export const Home = () => {
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
             <p className="font-semibold lg:w-2/3 mx-auto leading-relaxed title-font text-lg">
-              This is just a side project from myself at the moment, it's really
-              just a starter at this point, I'll be updating this soon :).
+              This is just a side project from myself at the moment, it&apos;s
+              really just a starter at this point, I&apos;ll be updating this
+              soon :).
             </p>
           </div>
         </div>

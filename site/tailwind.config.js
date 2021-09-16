@@ -12,7 +12,6 @@ module.exports = {
       './src/common/**/*.tsx',
       './src/layout/**/*.tsx',
     ],
-    // These options are passed through directly to PurgeCSS
   },
   theme: {
     extend: {
@@ -33,7 +32,7 @@ module.exports = {
       zIndex: ['hover', 'active'],
     },
   },
-  plugins: [require('@tailwindcss/forms')],
+  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
   future: {
     purgeLayersByDefault: true,
   },
