@@ -4,6 +4,10 @@ Welcome to my new app for taking and managing notes through the GitHub Gists ser
 
 This is just a side project from myself at the moment, it's really just a starter at this point, I'll be updating this soon :).
 
+Progress on launching the app:
+
+![Launch the App](https://img.shields.io/github/milestones/issues-open/nicholasgriffintn/getthegist.app/1?label=Launch%20the%20App%21)
+
 ## APIs
 
 ### Auth
