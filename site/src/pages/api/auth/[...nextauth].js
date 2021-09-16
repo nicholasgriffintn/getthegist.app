@@ -22,4 +22,34 @@ export default NextAuth({
   theme: 'auto',
 
   debug: false,
+
+  /* callbacks: {
+    async jwt({ token, user, account, profile, isNewUser }) {
+      console.log(token);
+      console.log(user);
+      console.log(account);
+      console.log(profile);
+      console.log(isNewUser);
+
+      const newToken = token;
+
+      if (account && account.access_token) {
+        newToken.accessToken = account.access_token;
+      }
+      return newToken;
+    },
+    async session({ session, token, user }) {
+      console.log(session);
+      console.log(token);
+      console.log(user);
+
+      const newSession = session;
+
+      if (token && token.accessToken) {
+        newSession.accessToken = token.accessToken;
+      }
+
+      return newSession;
+    },
+  }, */
 });
