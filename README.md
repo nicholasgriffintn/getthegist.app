@@ -6,7 +6,7 @@ This is just a side project from myself at the moment, it's really just a starte
 
 Progress on launching the app:
 
-![Launch the App](https://img.shields.io/github/milestones/progress/nicholasgriffintn/getthegist.app/1?label=Launch%20the%20App%21)
+[![Launch the App](https://img.shields.io/github/milestones/progress/nicholasgriffintn/getthegist.app/1?label=Launch%20the%20App%21)](https://github.com/nicholasgriffintn/getthegist.app/milestone/1)
 
 ## APIs
 
