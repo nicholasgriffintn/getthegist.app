@@ -12,9 +12,11 @@ const HomePage = () => {
 
   if (!session) {
     return <SignIn />;
+  } else if (session) {
+    return <Home />;
   }
 
-  return <Home />;
+  return <Loading />;
 };
 
 export default HomePage;

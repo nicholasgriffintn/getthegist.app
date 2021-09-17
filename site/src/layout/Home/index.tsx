@@ -20,11 +20,10 @@ export const Home = () => {
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
-            <p className="font-semibold lg:w-2/3 mx-auto leading-relaxed title-font text-lg">
-              This is just a side project from myself at the moment, it&apos;s
-              really just a starter at this point, I&apos;ll be updating this
-              soon :).
-            </p>
+            <div className="prose w-full m-auto">
+              <h1>Loading...</h1>
+              <p>We&apos;ll just be a moment.</p>
+            </div>
           </div>
         </div>
       </section>
