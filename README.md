@@ -46,20 +46,68 @@ Returns the CSRF token.
 
 Returns the list of available providers.
 
-### GitHub Gists
+### GitHub Gists - must be signed in
 
-`GET` https://getthegist.app/api/github/gist
+`GET` https://getthegist.app/api/github/gists
 
-Get all of the user's gists, must be signed in
+Get all of the user's gists
 
-`GET` https://getthegist.app/api/github/gist/[id]
+`GET` https://getthegist.app/api/github/gists/starred
+
+Get all of the user's starred gists
+
+`GET` https://getthegist.app/api/github/gists/gist/[id]
 
 Get a gist
 
-`POST` https://getthegist.app/api/github/gist/create
+`GET` https://getthegist.app/api/github/gists/gist/[id]/revision
+
+Get a gist's revision
+
+`GET` https://getthegist.app/api/github/gists/gist/[id]/forks
+
+Get a gist's forks
+
+`GET` https://getthegist.app/api/github/gists/gist/[id]/starred-status
+
+Check if a gist is starred
+
+`POST` https://getthegist.app/api/github/gists/gist/[id]/star
+
+Star a gist
+
+`POST` https://getthegist.app/api/github/gists/gist/[id]/unstar
+
+Unstar a gist
+
+`POST` https://getthegist.app/api/github/gists/gist/create
 
 Create a gist
 
-`PUT` https://getthegist.app/api/github/gist/update
+`PUT` https://getthegist.app/api/github/gists/gist/update
 
 Update a gist
+
+`GET` https://getthegist.app/api/github/gists/gist/[id]/comments
+
+Get all comments on a gist
+
+`GET` https://getthegist.app/api/github/gists/gist/[id]/comments/[comment]
+
+Get a comment on a gist
+
+`POST` https://getthegist.app/api/github/gists/gist/[id]/comments/post
+
+Create a comment against a gist
+
+`POST` https://getthegist.app/api/github/gists/gist/[id]/comments/[comment]/delete
+
+Delete a comment against a gist
+
+`PUT` https://getthegist.app/api/github/gists/gist/[id]/comments/[comment]/update
+
+Update a comment against a gist
+
+`GET` https://getthegist.app/api/github/gists/gist/[id]/commits
+
+Get all commits on a gist
