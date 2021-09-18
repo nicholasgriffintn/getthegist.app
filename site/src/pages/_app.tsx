@@ -11,11 +11,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider session={pageProps.session}>
       <GlobalStyle />
-      <Header />
-      <main>
-        <Component {...pageProps} />
-      </main>
-      <Footer />
+      <div className={`AppWrap Session_${!!pageProps.session}`}>
+        <div className="AppWrap_Side">
+          <Header />
+        </div>
+        <div className="AppWrap_Main">
+          <main className="AppWrap_Main_Content">
+            <Component {...pageProps} />
+          </main>
+          <Footer />
+        </div>
+      </div>
     </Provider>
   );
 }
