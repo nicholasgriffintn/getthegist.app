@@ -31,10 +31,10 @@ export const SignIn = () => {
                 functionality and a better viewer for things like code snippets.
               </p>
               <p>
-                You can get started by clicking the Sign In button below, which
-                will send you over to GitHub for authentication, I only request
-                that you provide read access to your email and both read and
-                write access to your Gists, for obvious reasons :)
+                You can get started by clicking the "Sign In Now" button below,
+                which will send you over to GitHub for authentication, I only
+                request that you provide read access to your email and both read
+                and write access to your Gists, for obvious reasons :)
               </p>
               <p className="font-semibold lg:w-2/3 mx-auto leading-relaxed title-font text-lg">
                 <Login />

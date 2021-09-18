@@ -29,7 +29,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .AppWrap {
-    display: flex;
+    display: block;
     width: 100%;
     height: 100%;
     min-height: 100vh;
@@ -43,26 +43,38 @@ export const GlobalStyle = createGlobalStyle`
   display: none;
   }
 
+  .AppWrap.Session_true {
+    background: #28272c;
+}
+
   .AppWrap_Main_Content {
     min-height: calc(100vh - 105px);
 }
 
-.AppWrap_Main {
-    max-height: 100vh;
-    overflow-y: auto;
-}
-
 .AppWrap_Side {
     width: 100%;
-    max-width: 330px;
-    background-color: #f9f9f9;
+    min-width: 225px;
+    max-width: 225px;
+    background-color: #2c2b30;
     backdrop-filter: blur(10px);
-    border-right: 1px solid #121212;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    z-index: 9;
+    transition: all 0.5s ease;
+    color: #b7b7b7
 }
 
   .AppWrap_Main {
       width: 100%;
   }
+
+.AppWrap.Session_true .AppWrap_Main {
+    background: #28272c;
+    color: #b7b7b7;
+    padding-left: 225px;
+}
 
   .page-logo {
       width: 100%;
