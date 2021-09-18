@@ -4,7 +4,11 @@ export const Loading = () => {
   return (
     <>
       <Head>
-        <title>Loading...</title>
+        <title>Get the Gist</title>
+        <meta
+          name="description"
+          content="A note taking app that uses GitHub Gists"
+        ></meta>
       </Head>
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-24 mx-auto">

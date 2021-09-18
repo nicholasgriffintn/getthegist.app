@@ -35,7 +35,7 @@ export const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     max-width: 100vw;
     overflow-x: hidden;
-    background: #f9f9f9;
+    background: #EFFCFE;
     color: #121212;
 }
 
@@ -45,7 +45,6 @@ export const GlobalStyle = createGlobalStyle`
 
   .AppWrap_Main_Content {
     min-height: calc(100vh - 105px);
-    max-height: 100vh;
 }
 
 .AppWrap_Main {
@@ -61,7 +60,24 @@ export const GlobalStyle = createGlobalStyle`
     border-right: 1px solid #121212;
 }
 
-.AppWrap_Main {
-    width: 100%;
-}
+  .AppWrap_Main {
+      width: 100%;
+  }
+
+  .page-logo {
+      width: 100%;
+      text-align: center;
+      margin-bottom: 40px;
+  }
+
+  .page-logo svg {
+      max-width: 240px;
+      margin: 0 auto;
+  }
+
+  .note-prose {
+      background: #F9CB49;
+      padding: 3rem 2rem;
+      border-bottom: solid 30px #F5B92D;
+  }
 `;
