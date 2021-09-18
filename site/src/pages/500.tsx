@@ -1,14 +1,23 @@
 import Head from 'next/head';
 
 import { Hero } from '@/common/Hero';
+import { Layout } from '@/common/Layout';
 
 const NotFound = () => {
   return (
     <>
       <Head>
-        <title>500 Internal Server Error - Nicholas Griffin</title>
+        <title>500 - Internal Server Error - Nicholas Griffin</title>
       </Head>
-      <Hero title="500 Internal Server Error" />
+      <Layout>
+        <Hero
+          title="500 - Internal Server Error"
+          link={{
+            href: '/',
+            text: 'Back to the Homepage',
+          }}
+        />
+      </Layout>
     </>
   );
 };

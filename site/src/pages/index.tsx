@@ -1,10 +1,10 @@
+import { useSession } from 'next-auth/client';
+
 import { Home } from '@/layout/Home';
 import { Loading } from '@/layout/Loading';
 import { SignIn } from '@/layout/SignIn';
-import { useSession } from 'next-auth/client';
-
-import { Header } from '@/common/Header';
-import { Footer } from '@/common/Footer';
+import { Sidebar } from '@/common/Sidebar';
+import { Layout } from '@/common/Layout';
 
 const HomePage = () => {
   const [session, loading] = useSession();
@@ -14,10 +14,13 @@ const HomePage = () => {
 
   return (
     <div className={`AppWrap Session_${!!session?.user?.email}`}>
-      <div className="AppWrap_Side">Sidebar!</div>
+      {session?.user ? (
+        <div className="AppWrap_Side">
+          <Sidebar user={session?.user} />
+        </div>
+      ) : null}
       <div className="AppWrap_Main">
-        <main className="AppWrap_Main_Content">
-          <Header />
+        <Layout>
           {typeof window === 'undefined' || loading ? (
             <Loading />
           ) : session?.user?.email ? (
@@ -25,8 +28,7 @@ const HomePage = () => {
           ) : (
             <SignIn />
           )}
-          <Footer />
-        </main>
+        </Layout>
       </div>
     </div>
   );

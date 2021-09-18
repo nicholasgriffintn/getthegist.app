@@ -44,7 +44,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .AppWrap.Session_true {
-    background: #28272c;
+    background: #EFFCFE;
 }
 
   .AppWrap_Main_Content {
@@ -55,7 +55,7 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     min-width: 225px;
     max-width: 225px;
-    background-color: #2c2b30;
+    background-color: #dae8ea;
     backdrop-filter: blur(10px);
     position: fixed;
     left: 0;
@@ -63,7 +63,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     z-index: 9;
     transition: all 0.5s ease;
-    color: #b7b7b7
+    color: #111827
 }
 
   .AppWrap_Main {
@@ -71,8 +71,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 .AppWrap.Session_true .AppWrap_Main {
-    background: #28272c;
-    color: #b7b7b7;
     padding-left: 225px;
 }
 
@@ -92,4 +90,71 @@ export const GlobalStyle = createGlobalStyle`
       padding: 3rem 2rem;
       border-bottom: solid 30px #F5B92D;
   }
+
+  .AppWrap_Side_inner {
+    height: 100%;
+    position: relative;
+}
+
+.AppWrap_Side_inner_footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 10px 15px;
+    max-width: 225px;
+    width: 100%;
+}
+
+.AppWrap_Side_inner_mid {
+    padding: 10px 15px;
+}
+
+.AppWrap_Side_inner_header {
+    padding: 10px 15px;
+}
+
+.AppWrap_Side_inner_footer_account {
+    display: flex;
+    align-items: center;
+}
+
+.AppWrap_Side_inner_footer_account_avatar {
+    width: 45px;
+    height: 45px;
+    position: relative;
+}
+
+.AppWrap_Side_inner_footer_account_avatar_status {
+    background: #cc0c0c;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.AppWrap_Side_inner_footer_account_avatar_image {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.AppWrap_Side_inner_footer_account_details {
+    padding-left: 10px;
+    width: 100%;
+}
+
+.AppWrap_Side_inner_footer_account_details_name {
+    font-weight: bold;
+}
+
+.AppWrap_Side_inner_footer_account_details_subtitle {
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    max-width: 140px
+}
 `;
