@@ -1,9 +1,12 @@
 import { useRouter } from 'next/router';
 
 import Logo from '@/common/Logo';
+import { useUserContext } from '@/context/user';
 
-export const Sidebar = ({ user }) => {
+export const Sidebar = () => {
   const router = useRouter();
+
+  const { user } = useUserContext();
 
   return (
     <div className="AppWrap_Side_inner">
@@ -21,20 +24,25 @@ export const Sidebar = ({ user }) => {
       </div>
       <div className="AppWrap_Side_inner_footer">
         <div className="AppWrap_Side_inner_footer_account">
-          <div className="AppWrap_Side_inner_footer_account_avatar">
-            <div className="AppWrap_Side_inner_footer_account_avatar_status"></div>
-            <div className="AppWrap_Side_inner_footer_account_avatar_image">
-              <img src={user.picture} alt={`${user.name}'s avatar'`} />
-            </div>
-          </div>
-          <div className="AppWrap_Side_inner_footer_account_details">
-            <div className="AppWrap_Side_inner_footer_account_details_name">
-              {user.name}
-            </div>
-            <div className="AppWrap_Side_inner_footer_account_details_subtitle">
-              {user.email}
-            </div>
-          </div>
+          {user && user.name ? (
+            <>
+              <div className="AppWrap_Side_inner_footer_account_avatar">
+                <div className="AppWrap_Side_inner_footer_account_avatar_status"></div>
+                <div className="AppWrap_Side_inner_footer_account_avatar_image">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={user.avatar_url} alt={`${user.name}'s avatar'`} />
+                </div>
+              </div>
+              <div className="AppWrap_Side_inner_footer_account_details">
+                <div className="AppWrap_Side_inner_footer_account_details_name">
+                  {user.name}
+                </div>
+                <div className="AppWrap_Side_inner_footer_account_details_subtitle">
+                  {user.company}
+                </div>
+              </div>
+            </>
+          ) : null}
         </div>
       </div>
     </div>

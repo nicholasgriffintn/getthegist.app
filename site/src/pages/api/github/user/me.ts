@@ -4,76 +4,86 @@ import { getSession } from 'next-auth/client';
 import { getToken } from 'next-auth/jwt';
 const { Octokit } = require('@octokit/rest');
 
-const api = async (req: NextApiRequest, res: NextApiResponse) => {
-  const secret = process.env.NEXT_JWT_AUTH_SECRET;
-  const token = await getToken({ req, secret });
-  const session = await getSession({ req });
+const api = (req: NextApiRequest, res: NextApiResponse) => {
+  return new Promise(async (resolve, reject) => {
+    const secret = process.env.NEXT_JWT_AUTH_SECRET;
+    const token = await getToken({ req, secret });
+    const session = await getSession({ req });
 
-  const accessToken =
-    token && token.accessToken
-      ? token.accessToken
-      : session && session.accessToken
-      ? session.accessToken
-      : null;
+    const accessToken =
+      token && token.accessToken
+        ? token.accessToken
+        : session && session.accessToken
+        ? session.accessToken
+        : null;
 
-  if (accessToken) {
-    const octokit = new Octokit(
-      accessToken
-        ? {
-            auth: `token ${accessToken}`,
-          }
-        : {},
-    );
+    if (accessToken) {
+      const octokit = new Octokit(
+        accessToken
+          ? {
+              auth: `token ${accessToken}`,
+            }
+          : {},
+      );
 
-    if (req.method === 'GET') {
-      if (session && token && (token.accessToken || session.accessToken)) {
-        octokit.rest.users
-          .getAuthenticated()
-          .then(({ data }) => {
-            octokit.rest.users
-              .getContextForUser({
-                username: data?.login,
-              })
-              .then(context => {
-                res.status(200).json({
-                  status: 'Success',
-                  message: 'Retrieved!',
-                  data: { ...data, context: context.data },
-                });
-              })
-              .catch(err => {
-                console.error(err);
-                res.status(200).json({
+      if (req.method === 'GET') {
+        if (session && token && (token.accessToken || session.accessToken)) {
+          octokit.rest.users
+            .getAuthenticated()
+            .then(({ data }) => {
+              res.statusCode = 200;
+              res.end(
+                JSON.stringify({
                   status: 'Success',
                   message: 'Retrieved!',
                   data: { ...data },
-                });
-              });
-          })
-          .catch(err => {
-            console.error(err);
-            res.status(500).json({
-              status: 'Error',
-              message: 'Something went wrong!',
+                }),
+              );
+              return resolve({});
+            })
+            .catch(err => {
+              console.error(err);
+
+              res.statusCode = 500;
+              res.end(
+                JSON.stringify({
+                  status: 'Error',
+                  message: 'Something went wrong',
+                }),
+              );
+              return resolve({});
             });
-          });
+        } else {
+          res.statusCode = 400;
+          res.end(
+            JSON.stringify({
+              status: 'Error',
+              message: 'You must be signed in to use this API',
+            }),
+          );
+          return resolve({});
+        }
       } else {
-        res.status(403).json({
-          message: 'You must be signed in to use this API',
-        });
+        res.statusCode = 405;
+        res.end(
+          JSON.stringify({
+            status: 'Error',
+            message: 'Method Not Allowed',
+          }),
+        );
+        return resolve({});
       }
     } else {
-      res.status(405).json({
-        status: 'Error',
-        message: 'Method Not Allowed',
-      });
+      res.statusCode = 400;
+      res.end(
+        JSON.stringify({
+          status: 'Error',
+          message: 'You must be signed in to use this API!',
+        }),
+      );
+      return resolve({});
     }
-  } else {
-    res.status(400).json({
-      status: 'Error',
-      message: 'You must be signed in to use this API!',
-    });
-  }
+  });
 };
 
 export default api;

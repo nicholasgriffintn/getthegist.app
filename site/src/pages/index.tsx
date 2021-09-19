@@ -8,15 +8,12 @@ import { Layout } from '@/common/Layout';
 
 const HomePage = () => {
   const [session, loading] = useSession();
-  {
-    console.log(session, loading);
-  }
 
   return (
     <div className={`AppWrap Session_${!!session?.user?.email}`}>
       {session?.user ? (
         <div className="AppWrap_Side">
-          <Sidebar user={session?.user} />
+          <Sidebar />
         </div>
       ) : null}
       <div className="AppWrap_Main">
