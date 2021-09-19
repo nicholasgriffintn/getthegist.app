@@ -8,6 +8,31 @@ Progress on launching the app:
 
 [![Launch the App](https://img.shields.io/github/milestones/progress/nicholasgriffintn/getthegist.app/1?label=Launch%20the%20App%21)](https://github.com/nicholasgriffintn/getthegist.app/milestone/1)
 
+## Notes structure
+
+Each note that has been stored on GitHub Gists should contain a metadata.json file, this file will be used in order to categorise the note and add extra information that we can use in our app for now or in the future.
+
+Here's an initial example of `metadata.json`:
+
+```
+{
+  "title": "Get the Gist note test",
+  "description": "This is just a test",
+  "public": true,
+  "created_at": "2021-03-15T20:19:36Z",
+  "updated_at": "2021-03-15T20:19:36Z",
+  "folder": "Test",
+  "favorited": false,
+  "pinned": false,
+  "color": "#666",
+  "Tags": ["test"]
+}
+```
+
+For the content, we require a file called `content.md`, this should be a markdown file with the contents of the note.
+
+Alongside that, we will show other files that have been added below the note, if the Gist does not comply with this, we should do our best to still make it work within the app, at least viewable.
+
 ## APIs
 
 ### Auth
