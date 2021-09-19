@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { Detector } from 'react-detect-offline';
+import { signOut } from 'next-auth/client';
 
 import Logo from '@/common/Logo';
 import { useUserContext } from '@/context/user';
@@ -29,6 +30,9 @@ export const Sidebar = () => {
           <strong>Tags</strong>
           <ul>
             <li>No folders just yet :)</li>
+          </ul>
+          <ul>
+            <button onClick={() => signOut()}>Sign out</button>
           </ul>
         </nav>
       </div>
