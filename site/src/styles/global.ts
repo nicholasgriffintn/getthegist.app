@@ -53,8 +53,8 @@ export const GlobalStyle = createGlobalStyle`
 
 .AppWrap_Side {
     width: 100%;
-    min-width: 450px;
-    max-width: 450px;
+    min-width: 650px;
+    max-width: 650px;
     background-color: #c7d5d8;
     backdrop-filter: blur(10px);
     position: fixed;
@@ -83,7 +83,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
 .AppWrap.Session_true .AppWrap_Main {
-    padding-left: 450px;
+    padding-left: 650px;
 }
 
   .page-logo {

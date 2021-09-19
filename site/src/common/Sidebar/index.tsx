@@ -1,14 +1,29 @@
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { Detector } from 'react-detect-offline';
 import { signOut } from 'next-auth/client';
 
 import Logo from '@/common/Logo';
 import { useUserContext } from '@/context/user';
+import { useGistContext } from '@/context/gists';
 
 export const Sidebar = () => {
   const router = useRouter();
 
+  const [folders, setFolders] = useState([]);
+  const [tags, setTags] = useState([]);
+
   const { user } = useUserContext();
+  const { getFolders, getTags, gists } = useGistContext();
+
+  useEffect(() => {
+    async function setStates() {
+      setFolders(await getFolders());
+      setTags(await getTags());
+    }
+
+    setStates();
+  }, [getFolders, getTags, setFolders]);
 
   return (
     <div className="AppWrap_Side_inner">
@@ -25,14 +40,26 @@ export const Sidebar = () => {
               <ul>
                 <li>All notes</li>
               </ul>
-              <strong>Folders</strong>
-              <ul>
-                <li>No folders just yet :)</li>
-              </ul>
-              <strong>Tags</strong>
-              <ul>
-                <li>No folders just yet :)</li>
-              </ul>
+              {folders && folders.length > 0 ? (
+                <>
+                  <strong>Folders</strong>
+                  <ul>
+                    {folders.map(({ id, name }) => {
+                      return <li key={`notes-folder-${id}`}>{name}</li>;
+                    })}
+                  </ul>
+                </>
+              ) : null}
+              {tags && tags.length > 0 ? (
+                <>
+                  <strong>Tags</strong>
+                  <ul>
+                    {tags.map(({ id, name }) => {
+                      return <li key={`notes-tag-${id}`}>{name}</li>;
+                    })}
+                  </ul>
+                </>
+              ) : null}
               <ul>
                 <button onClick={() => signOut()}>Sign out</button>
               </ul>
@@ -75,7 +102,17 @@ export const Sidebar = () => {
         <div
           className="AppWrap_Side_inner_sidebars_sidebar"
           style={{ background: '#d1e1e4', width: '80%' }}
-        ></div>
+        >
+          {console.log(gists)}
+          {gists && gists.length > 0 ? (
+            <ul className="notes_list">
+              {gists.map(gist => {
+                console.log(gist);
+                return <li className="notes_list_item">{gist.title}</li>;
+              })}
+            </ul>
+          ) : null}
+        </div>
       </div>
     </div>
   );

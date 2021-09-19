@@ -54,7 +54,7 @@ export function UserContextProvider({ children }) {
 
       return user.data;
     } else {
-      return await db.user.where();
+      return await db.user.toArray();
     }
   }
 
@@ -62,8 +62,6 @@ export function UserContextProvider({ children }) {
     const userData = await getUser();
 
     await db.user.put(userData);
-
-    console.log(userData);
 
     return userData;
   }

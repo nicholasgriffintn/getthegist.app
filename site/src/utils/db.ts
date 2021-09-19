@@ -6,6 +6,12 @@ db.version(1).stores({
   user: 'id, email, followers, following, created_at, updated_at, hireable, bio, twitter_username, public_repos, public_gists, login, avarar_url, url, html_url, type, site_admin, name, company, blog, location',
   notes:
     'id,public, created_at, updated_at, description, comments, owner, truncated, forks, history, metadata, files',
+  folders: 'id, name',
+  tags: 'id, name',
+});
+
+db.open().catch(function (err) {
+  console.error(err.stack || err);
 });
 
 export default db;

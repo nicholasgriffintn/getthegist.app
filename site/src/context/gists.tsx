@@ -49,21 +49,36 @@ export type Gist = {
 
 type UserDataType = {
   gists: Gist[] | undefined;
+  getGist: any;
+  getFolders: any;
+  getTags: any;
 };
 
 const GistContext = createContext<UserDataType>(undefined!);
 
 export function GistContextProvider({ children }) {
   async function getGists() {
-    const response = await fetch(`${baseUrl}/api/github/gists`);
+    if (navigator && navigator.onLine) {
+      const response = await fetch(`${baseUrl}/api/github/gists`);
 
-    if (!response.ok) {
-      throw new Error('Problem fetching gists list');
+      if (!response.ok) {
+        throw new Error('Problem fetching gists list');
+      }
+
+      const gists = await response.json();
+
+      return gists.data;
+    } else {
+      return await db.notes.toArray();
     }
+  }
 
-    const gists = await response.json();
+  async function getFolders() {
+    return await db.folders.toArray();
+  }
 
-    return gists.data;
+  async function getTags() {
+    return await db.tags.toArray();
   }
 
   async function getGist(id): Promise<Gist> {
@@ -85,8 +100,6 @@ export function GistContextProvider({ children }) {
   async function initaliseNotes() {
     const gistsData = await getGists();
 
-    const gistsStorage: Gist[] = [];
-
     gistsData.map(async gist => {
       const { id, files } = gist;
 
@@ -106,7 +119,6 @@ export function GistContextProvider({ children }) {
           const {
             created_at,
             updated_at,
-            description,
             comments,
             owner,
             truncated,
@@ -129,10 +141,16 @@ export function GistContextProvider({ children }) {
           const content = contentFile?.content;
 
           const newGist = {
+            title: metadata.title,
+            tags: metadata.tags,
+            color: metadata.color,
+            description: metadata.description,
+            favorited: metadata.favorited,
+            folder: metadata.folder,
+            pinned: metadata.pinned,
             id,
             created_at,
             updated_at,
-            description,
             comments,
             owner,
             truncated,
@@ -143,7 +161,14 @@ export function GistContextProvider({ children }) {
             content,
           };
 
-          gistsStorage.push(newGist);
+          db.folders.put({ id: metadata.folder, name: metadata.folder });
+
+          if (metadata.tags && metadata.tags.length > 0) {
+            metadata.tags.map(tag => {
+              return db.tags.put({ id: tag, name: tag });
+            });
+          }
+
           db.notes.put(newGist);
         }
       }
@@ -151,7 +176,7 @@ export function GistContextProvider({ children }) {
       return gist;
     });
 
-    return gistsStorage;
+    return [];
   }
 
   const { data: gists } = useQuery<Gist[], Error>(
@@ -162,6 +187,8 @@ export function GistContextProvider({ children }) {
   let sharedState = {
     gists,
     getGist,
+    getFolders,
+    getTags,
   };
 
   return (
