@@ -17,8 +17,17 @@ export const Sidebar = () => {
       </div>
       <div className="AppWrap_Side_inner_mid">
         <nav className="AppWrap_Side_inner_mid_nav">
+          <strong>Quick Links</strong>
           <ul>
-            <li>Link</li>
+            <li>All notes</li>
+          </ul>
+          <strong>Folders</strong>
+          <ul>
+            <li>No folders just yet :)</li>
+          </ul>
+          <strong>Tags</strong>
+          <ul>
+            <li>No folders just yet :)</li>
           </ul>
         </nav>
       </div>

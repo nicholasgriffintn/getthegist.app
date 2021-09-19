@@ -1,8 +1,8 @@
-import { createContext, useContext } from 'react';
-
+import { createContext, useContext, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import { baseUrl } from '@/utils/url';
+import db from '@/utils/db';
 
 import { User } from '@/context/user';
 
@@ -33,7 +33,7 @@ export type History = {
 };
 
 export type Gist = {
-  url: string;
+  url?: string;
   id: string;
   files: File;
   public: boolean;
@@ -57,7 +57,7 @@ type GistDetailsQuery = {
 
 const GistContext = createContext<UserDataType>(undefined!);
 
-export function UserContextProvider({ children }) {
+export function GistContextProvider({ children }) {
   async function getGists() {
     const response = await fetch(`${baseUrl}/api/github/gists`);
 
@@ -70,19 +70,68 @@ export function UserContextProvider({ children }) {
     return gists.data;
   }
 
-  const { data: gists } = useQuery<Gist[], Error>(['gists', {}], getGists);
-
   async function getGist({ id }: GistDetailsQuery): Promise<Gist> {
-    const response = await fetch(`${baseUrl}/api/github/gists/gist/${id}`);
+    if (navigator && navigator.onLine) {
+      const response = await fetch(`${baseUrl}/api/github/gists/gist/${id}`);
 
-    if (!response.ok) {
-      throw new Error('Problem fetching gist');
+      if (!response.ok) {
+        throw new Error('Problem fetching gist');
+      }
+
+      const gist = await response.json();
+
+      return gist.data;
+    } else {
+      return await db.notes.where();
     }
-
-    const gist = await response.json();
-
-    return gist.data;
   }
+
+  async function initaliseNotes() {
+    const gistsData = await getGists();
+
+    const gistsStorage: Gist[] = [];
+
+    gistsData.map(
+      ({
+        id,
+        created_at,
+        updated_at,
+        description,
+        comments,
+        owner,
+        truncated,
+        forks,
+        history,
+        metadata,
+        files,
+      }) => {
+        const newGist = {
+          id,
+          created_at,
+          updated_at,
+          description,
+          comments,
+          owner,
+          truncated,
+          forks,
+          history,
+          metadata,
+          files,
+        };
+
+        gistsStorage.push(newGist);
+      },
+    );
+
+    await db.notes.bulkPut(gistsStorage);
+
+    return gistsStorage;
+  }
+
+  const { data: gists } = useQuery<Gist[], Error>(
+    ['gists', {}],
+    initaliseNotes,
+  );
 
   let sharedState = {
     gists,

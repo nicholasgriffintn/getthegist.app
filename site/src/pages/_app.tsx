@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import { Provider } from 'next-auth/client';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { UserContextProvider } from '@/context/user';
+import { GistContextProvider } from '@/context/gists';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient();
@@ -13,10 +14,12 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Provider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
         <UserContextProvider>
-          <GlobalStyle />
-          <div className="RootWrap">
-            <Component {...pageProps} />
-          </div>
+          <GistContextProvider>
+            <GlobalStyle />
+            <div className="RootWrap">
+              <Component {...pageProps} />
+            </div>
+          </GistContextProvider>
         </UserContextProvider>
       </QueryClientProvider>
     </Provider>

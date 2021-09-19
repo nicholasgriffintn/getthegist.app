@@ -1,8 +1,8 @@
-import { createContext, useContext } from 'react';
-
+import { createContext, useContext, useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 import { baseUrl } from '@/utils/url';
+import db from '@/utils/db';
 
 export type User = {
   login: string;
@@ -42,19 +42,33 @@ export function UserContextProvider({ children }) {
   }
 
   async function getUser() {
-    const response = await fetch(`${baseUrl}/api/github/user/me`);
+    if (navigator && navigator.onLine) {
+      const response = await fetch(`${baseUrl}/api/github/user/me`);
 
-    if (!response.ok) {
-      throw new Error('Problem fetching user');
+      if (!response.ok) {
+        throw new Error('Problem fetching user');
+      }
+
+      const user = await response.json();
+      assertIsUser(user.data);
+
+      return user.data;
+    } else {
+      return await db.user.where();
     }
-
-    const user = await response.json();
-    assertIsUser(user.data);
-
-    return user.data;
   }
 
-  const { data: user } = useQuery<User, Error>(['user', {}], getUser);
+  async function initaliseUser() {
+    const userData = await getUser();
+
+    await db.user.put(userData);
+
+    console.log(userData);
+
+    return userData;
+  }
+
+  const { data: user } = useQuery<User, Error>(['user', {}], initaliseUser);
 
   let sharedState = {
     user,
