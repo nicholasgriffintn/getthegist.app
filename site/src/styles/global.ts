@@ -35,7 +35,7 @@ export const GlobalStyle = createGlobalStyle`
     min-height: 100vh;
     max-width: 100vw;
     overflow-x: hidden;
-    background: #EFFCFE;
+    background: #dae8ea;
     color: #121212;
 }
 
@@ -44,7 +44,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .AppWrap.Session_true {
-    background: #EFFCFE;
+    background: #dae8ea;
 }
 
   .AppWrap_Main_Content {
@@ -53,9 +53,9 @@ export const GlobalStyle = createGlobalStyle`
 
 .AppWrap_Side {
     width: 100%;
-    min-width: 225px;
-    max-width: 225px;
-    background-color: #dae8ea;
+    min-width: 450px;
+    max-width: 450px;
+    background-color: #c7d5d8;
     backdrop-filter: blur(10px);
     position: fixed;
     left: 0;
@@ -66,12 +66,24 @@ export const GlobalStyle = createGlobalStyle`
     color: #111827
 }
 
+.AppWrap_Side_inner_sidebars {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.AppWrap_Side_inner_sidebars .AppWrap_Side_inner_sidebars_sidebar {
+    position: relative;
+    height: 100%;
+    width: 50%;
+}
+
   .AppWrap_Main {
       width: 100%;
   }
 
 .AppWrap.Session_true .AppWrap_Main {
-    padding-left: 225px;
+    padding-left: 450px;
 }
 
   .page-logo {
