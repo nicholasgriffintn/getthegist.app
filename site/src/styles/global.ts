@@ -157,4 +157,8 @@ export const GlobalStyle = createGlobalStyle`
     width: 100%;
     max-width: 140px
 }
+
+.AppWrap_Side_inner_footer_account_avatar_status.status_true {
+    background: #18bf4b;
+}
 `;

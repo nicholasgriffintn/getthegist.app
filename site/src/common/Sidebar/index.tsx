@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { Detector } from 'react-detect-offline';
 
 import Logo from '@/common/Logo';
 import { useUserContext } from '@/context/user';
@@ -36,7 +37,14 @@ export const Sidebar = () => {
           {user && user.name ? (
             <>
               <div className="AppWrap_Side_inner_footer_account_avatar">
-                <div className="AppWrap_Side_inner_footer_account_avatar_status"></div>
+                <Detector
+                  render={({ online }) => (
+                    <div
+                      className={`AppWrap_Side_inner_footer_account_avatar_status status_${online}`}
+                    ></div>
+                  )}
+                />
+
                 <div className="AppWrap_Side_inner_footer_account_avatar_image">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={user.avatar_url} alt={`${user.name}'s avatar'`} />
