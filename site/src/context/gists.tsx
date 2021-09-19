@@ -36,7 +36,7 @@ export type Gist = {
   url?: string;
   id: string;
   files: File;
-  public: boolean;
+  public?: boolean;
   created_at: string;
   updated_at: string;
   description: string;
@@ -49,10 +49,6 @@ export type Gist = {
 
 type UserDataType = {
   gists: Gist[] | undefined;
-};
-
-type GistDetailsQuery = {
-  id: string;
 };
 
 const GistContext = createContext<UserDataType>(undefined!);
@@ -70,7 +66,7 @@ export function GistContextProvider({ children }) {
     return gists.data;
   }
 
-  async function getGist({ id }: GistDetailsQuery): Promise<Gist> {
+  async function getGist(id): Promise<Gist> {
     if (navigator && navigator.onLine) {
       const response = await fetch(`${baseUrl}/api/github/gists/gist/${id}`);
 
@@ -82,7 +78,7 @@ export function GistContextProvider({ children }) {
 
       return gist.data;
     } else {
-      return await db.notes.where();
+      return await db.notes.where({ id });
     }
   }
 
@@ -91,39 +87,69 @@ export function GistContextProvider({ children }) {
 
     const gistsStorage: Gist[] = [];
 
-    gistsData.map(
-      ({
-        id,
-        created_at,
-        updated_at,
-        description,
-        comments,
-        owner,
-        truncated,
-        forks,
-        history,
-        metadata,
-        files,
-      }) => {
-        const newGist = {
-          id,
-          created_at,
-          updated_at,
-          description,
-          comments,
-          owner,
-          truncated,
-          forks,
-          history,
-          metadata,
-          files,
-        };
+    gistsData.map(async gist => {
+      const { id, files } = gist;
 
-        gistsStorage.push(newGist);
-      },
-    );
+      if (id && files) {
+        const originalFilesArray: File[] = Object.values(files);
 
-    await db.notes.bulkPut(gistsStorage);
+        const metadataOriginal = originalFilesArray.find(
+          ({ filename }) => filename === 'metadata.json',
+        );
+        const contentOriginal = originalFilesArray.find(
+          ({ filename }) => filename === 'content.md',
+        );
+
+        if (metadataOriginal && contentOriginal) {
+          const gistData: Gist = await getGist(id);
+
+          const {
+            created_at,
+            updated_at,
+            description,
+            comments,
+            owner,
+            truncated,
+            forks,
+            history,
+          } = gistData;
+
+          const filesArray = Object.values(gistData.files);
+
+          const metadataFile = filesArray.find(
+            ({ filename }) => filename === 'metadata.json',
+          );
+
+          const metadata = JSON.parse(metadataFile?.content);
+
+          const contentFile = filesArray.find(
+            ({ filename }) => filename === 'content.md',
+          );
+
+          const content = contentFile?.content;
+
+          const newGist = {
+            id,
+            created_at,
+            updated_at,
+            description,
+            comments,
+            owner,
+            truncated,
+            forks,
+            history,
+            metadata,
+            files,
+            content,
+          };
+
+          gistsStorage.push(newGist);
+          db.notes.put(newGist);
+        }
+      }
+
+      return gist;
+    });
 
     return gistsStorage;
   }
