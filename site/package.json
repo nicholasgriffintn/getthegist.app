@@ -15,7 +15,7 @@
     "@octokit/rest": "^18.11.0",
     "@tailwindcss/forms": "^0.3.4",
     "@tailwindcss/typography": "^0.4.1",
-    "dexie": "^3.2.0",
+    "dexie": "^3.2.2",
     "next": "12.1.0",
     "next-auth": "^3.29.0",
     "next-pwa": "^5.4.0",
